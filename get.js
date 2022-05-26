@@ -30,7 +30,8 @@ function criaLinha(data) {
     tdCidade = document.createElement("td");
     tdEstado = document.createElement("td");
     tdDeficiencia = document.createElement("td");
-    
+    btnExcluir = document.createElement("button");
+    btnEditar = document.createElement("button");
 
     tdNome.innerHTML = data.nome;
     tdIdade.innerHTML = data.idade;
@@ -41,6 +42,9 @@ function criaLinha(data) {
     tdCidade.innerHTML = data.cidade;
     tdEstado.innerHTML = data.estado;
     tdDeficiencia.innerHTML = data.deficiencia;
+    btnExcluir.innerHTML =  "Excluir";
+    btnEditar.innerHTML =  "editar";
+
 
     linha.appendChild(tdNome);
     linha.appendChild(tdIdade);
@@ -51,6 +55,8 @@ function criaLinha(data) {
     linha.appendChild(tdCidade);
     linha.appendChild(tdEstado);
     linha.appendChild(tdDeficiencia);
+    linha.appendChild(btnExcluir);
+    linha.appendChild(btnEditar);
 
 
     return linha;
