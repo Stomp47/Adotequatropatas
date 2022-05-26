@@ -30,7 +30,7 @@ function criaLinha(data) {
     tdCidade = document.createElement("td");
     tdEstado = document.createElement("td");
     tdDeficiencia = document.createElement("td");
-    //button = document.createElement("button");
+    
 
     tdNome.innerHTML = data.nome;
     tdIdade.innerHTML = data.idade;

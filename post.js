@@ -12,7 +12,7 @@
           };
     
         axios.post('http://localhost:8080/adote-quatropatas/pet', data)
-        .then ((response)=> renderOutput(response))
+        
         console.log('socorro Deus')
     }
 
