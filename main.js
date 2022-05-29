@@ -74,9 +74,9 @@ function saveUser() {
     const estado = document.getElementById("estado").value;
     const deficiencia = document.getElementById("deficiencia").value;
 
-    const {data} = axios.post('http://localhost:8080/adote-quatropatas/pet', { nome, idade, especie, genero, porte, peso, cidade, estado, deficiencia });
+    const { data } = axios.post('http://localhost:8080/adote-quatropatas/pet', { nome, idade, especie, genero, porte, peso, cidade, estado, deficiencia });
 
-    const user = {nome, idade, especie, genero, porte, peso, cidade, estado, deficiencia };
+    const user = { selectedUserId, nome, idade, especie, genero, porte, peso, cidade, estado, deficiencia };
 
     const appendData = writerUserRow(user);
 
@@ -84,10 +84,11 @@ function saveUser() {
     tableBody.innerHTML += appendData;
 
     closeUserModal();
-   
+    setTimeout("location.reload(true);", 17);
+
 }
 
- function updateUser() {
+function updateUser() {
     const nome = document.getElementById("nome").value;
     const idade = document.getElementById("idade").value;
     const especie = document.getElementById("especie").value;
@@ -98,7 +99,7 @@ function saveUser() {
     const estado = document.getElementById("estado").value;
     const deficiencia = document.getElementById("deficiencia").value;
 
-     axios({
+    axios({
         method: 'put',
         url: 'http://localhost:8080/adote-quatropatas/pet?id_externo=' + selectedUserId,
         data: { nome, idade, especie, genero, porte, peso, cidade, estado, deficiencia }
@@ -107,12 +108,13 @@ function saveUser() {
     console.log(selectedUserId);
     const nomeField = document.querySelector("#row-" + selectedUserId + " td:nth-child(2)");
     const idadeField = document.querySelector("#row-" + selectedUserId + " td:nth-child(3)");
-    const generoField = document.querySelector("#row-" + selectedUserId + " td:nth-child(4)");
-    const porteField = document.querySelector("#row-" + selectedUserId + " td:nth-child(5)");
-    const pesoField = document.querySelector("#row-" + selectedUserId + " td:nth-child(6)");
-    const cidadeField = document.querySelector("#row-" + selectedUserId + " td:nth-child(7)");
-    const estadoField = document.querySelector("#row-" + selectedUserId + " td:nth-child(8)");
-    const deficienciaField = document.querySelector("#row-" + selectedUserId + " td:nth-child(9)");
+    const especieField = document.querySelector("#row-" + selectedUserId + " td:nth-child(4)");
+    const generoField = document.querySelector("#row-" + selectedUserId + " td:nth-child(5)");
+    const porteField = document.querySelector("#row-" + selectedUserId + " td:nth-child(6)");
+    const pesoField = document.querySelector("#row-" + selectedUserId + " td:nth-child(7)");
+    const cidadeField = document.querySelector("#row-" + selectedUserId + " td:nth-child(8)");
+    const estadoField = document.querySelector("#row-" + selectedUserId + " td:nth-child(9)");
+    const deficienciaField = document.querySelector("#row-" + selectedUserId + " td:nth-child(10)");
 
     const updateButtonField = document.querySelector("#row-" + selectedUserId + " td:nth-child(11) button:nth-child(1)");
 
@@ -134,7 +136,7 @@ function saveUser() {
 }
 
 async function deleteUser(userID) {
-    
+
 
     await axios.delete('http://localhost:8080/adote-quatropatas/pet?id_externo=' + userID);
 
