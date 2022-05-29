@@ -1,4 +1,5 @@
 let selectedUserId = "";
+var id;
 
 function closeUserModal() {
     const modalElement = document.getElementById('userModal');
@@ -20,8 +21,6 @@ function closeUserModal() {
 }
 
 function submitForm() {
-
-    console.log(selectedUserId)
     if (!selectedUserId) saveUser();
     else updateUser();
 }
@@ -60,7 +59,7 @@ function fillFormForUpdate(userPayload) {
     document.getElementById('cidade').value = user.cidade;
     document.getElementById('estado').value = user.estado;
     document.getElementById('deficiencia').value = user.deficiencia;
-    selectedUserId = user._id;
+    selectedUserId = user.id;
 }
 
 
@@ -85,10 +84,10 @@ function saveUser() {
     tableBody.innerHTML += appendData;
 
     closeUserModal();
-
+   
 }
 
-async function updateUser() {
+ function updateUser() {
     const nome = document.getElementById("nome").value;
     const idade = document.getElementById("idade").value;
     const especie = document.getElementById("especie").value;
@@ -99,7 +98,7 @@ async function updateUser() {
     const estado = document.getElementById("estado").value;
     const deficiencia = document.getElementById("deficiencia").value;
 
-    await axios.put({
+     axios({
         method: 'put',
         url: 'http://localhost:8080/adote-quatropatas/pet?id_externo=' + selectedUserId,
         data: { nome, idade, especie, genero, porte, peso, cidade, estado, deficiencia }
@@ -115,9 +114,9 @@ async function updateUser() {
     const estadoField = document.querySelector("#row-" + selectedUserId + " td:nth-child(8)");
     const deficienciaField = document.querySelector("#row-" + selectedUserId + " td:nth-child(9)");
 
-    const updateButtonField = document.querySelector("#row-" + selectedUserId + " td:nth-child(10) button:nth-child(1)");
+    const updateButtonField = document.querySelector("#row-" + selectedUserId + " td:nth-child(11) button:nth-child(1)");
 
-    const userUpdate = encodeURIComponent(JSON.stringify({ _id: selectedUserId, nome, idade, especie, genero, porte, peso, cidade, estado, deficiencia }));
+    const userUpdate = encodeURIComponent(JSON.stringify({ id: selectedUserId, nome, idade, especie, genero, porte, peso, cidade, estado, deficiencia }));
 
     updateButtonField.setAttribute("onclick", 'fillFormForUpdate("' + userUpdate + '")');
 
