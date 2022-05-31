@@ -16,7 +16,7 @@ function closeUserModal() {
     document.getElementById("estado").value = "";
     document.getElementById("deficiencia").value = "";
 
-    document.getElementById('submitBtn').innerHTML = "Save";
+    document.getElementById('submitBtn').innerHTML = "Salvar";
     selectedUserId = null;
 }
 
@@ -40,15 +40,15 @@ function writerUserRow(user) {
         <td>${user.estado}</td>
         <td>${user.deficiencia}</td>
         <td class="w-25">
-            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#userModal" onclick="fillFormForUpdate('${userUpdate}')">Update</button>
-            <button class="btn btn-danger" onclick ="deleteUser('${user.id}')">Delete</button>
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#userModal" onclick="fillFormForUpdate('${userUpdate}')">Editar</button>
+            <button class="btn btn-danger" onclick ="deleteUser('${user.id}')">Apagar</button>
         </td>
     </tr>
     `;
 }
 
 function fillFormForUpdate(userPayload) {
-    document.getElementById('submitBtn').innerHTML = "update";
+    document.getElementById('submitBtn').innerHTML = "Atualizar";
     const user = JSON.parse(decodeURIComponent(userPayload));
     document.getElementById('nome').value = user.nome;
     document.getElementById('idade').value = user.idade;
@@ -129,6 +129,7 @@ function updateUser() {
     pesoField.innerHTML = peso;
     cidadeField.innerHTML = cidade;
     estadoField.innerHTML = estado;
+    especieField.innerHTML = especie;
     deficienciaField.innerHTML = deficiencia;
 
 
