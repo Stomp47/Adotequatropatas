@@ -41,7 +41,6 @@ function writerUserRow(user) {
         <td class="w-25">
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#userModal" onclick="fillFormForUpdate('${userUpdate}')">Editar</button>
             <button class="btn btn-danger" onclick ="deleteUser('${user.id}')">Apagar</button>
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#adotaPet" onclick="petForm('${user.id}')">Adotar</button>
         </td>
     </tr>
     `;

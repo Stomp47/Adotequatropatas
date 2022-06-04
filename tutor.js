@@ -35,7 +35,7 @@ function writerUserRow(user) {
         <td class="w-25">
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#userModal" onclick="fillFormForUpdate('${userUpdate}')">Editar</button>
             <button class="btn btn-danger" onclick ="deleteUser('${user.cpf}')">Apagar</button>
-            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#lista" onclick="petForm('${user.cpf}')">teste</button>
+            <button class="btn btn-danger" onclick ="petForm('${user.cpf}')">teste</button>
         </td>
     </tr>
     `;
@@ -84,12 +84,12 @@ function updateUser() {
     const estado = document.getElementById("estado").value;
     const email = document.getElementById("email").value;
     const telefone = document.getElementById("telefone").value;
-    
+
 
     axios({
         method: 'put',
         url: 'http://localhost:8080/adote-quatropatas/tutor?cpf=' + selectedUserId,
-        data: {nome, cidade, estado, email, telefone }
+        data: { nome, cidade, estado, email, telefone }
     })
 
     const nomeField = document.querySelector("#row-" + selectedUserId + " td:nth-child(2)");
@@ -97,7 +97,7 @@ function updateUser() {
     const estadoField = document.querySelector("#row-" + selectedUserId + " td:nth-child(4)");
     const emailField = document.querySelector("#row-" + selectedUserId + " td:nth-child(5)");
     const telefoneField = document.querySelector("#row-" + selectedUserId + " td:nth-child(6)");
- 
+
 
     const updateButtonField = document.querySelector("#row-" + selectedUserId + " td:nth-child(7) button:nth-child(1)");
 
@@ -140,11 +140,32 @@ async function loadUsers() {
 loadUsers();
 
 async function petForm(userID) {
-    await axios.get('http://localhost:8080/adote-quatropatas/adocao?cpf='+userID);
+
+    let tableBodyContent = "";
+
+    const { data: users } = await axios.get('http://localhost:8080/adote-quatropatas/adocao?cpf='+userID);
+
+    users.forEach(user => (tableBodyContent += writerPetRow(user)));
+
+    const tableBody = document.getElementById("listaPets");
+    tableBody.innerHTML = tableBodyContent;
+
+
 }
 
-function closeListaModal() {
-    const modalElement = document.getElementById('lista');
-    const modal = bootstrap.Modal.getInstance(modalElement);
-    modal.hide();
+function writerPetRow(user) {
+    return `
+    <tr id="row-${user.id}">
+        <td>${user.id}</td>
+        <td>${user.nome}</td>
+        <td>${user.idade}</td>
+        <td>${user.especie}</td>
+        <td>${user.genero}</td>
+        <td>${user.porte}</td>
+        <td>${user.peso}</td>
+        <td>${user.cidade}</td>
+        <td>${user.estado}</td>
+        <td>${user.deficiencia}</td>
+    </tr>
+    `;
 }
