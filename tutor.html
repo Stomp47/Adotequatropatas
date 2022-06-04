@@ -27,20 +27,6 @@
                 </tr>
             </thead>
             <tbody id="table-body">
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <!-- <td>
-                        <button class="btn btn-success">Editar</button>
-                        <button class="btn btn-danger">Apagar</button>
-                        <a class="btn btn-primary" target="_blank" href="bichosadotados.html">Animais adotados</a>
-                    </td>-->
-                </tr>
-
             </tbody>
             <!-- Modal -->
             <div class="modal fade" id="userModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -88,8 +74,29 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="lista" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Pets Adotados</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="form px-4">
+                            <div class="form-group mb-4">
+                                <label for="cpf">CPF</label>
+                                <input type="number" class="form-control" maxlength="11" id="cpf"
+                                    placeholder="Não é possível alterar mais tarde">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" onclick="closeListaModal()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
 
-           
         </table>
     </div>
 

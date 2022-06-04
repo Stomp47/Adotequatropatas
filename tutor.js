@@ -1,5 +1,4 @@
 let selectedUserId = "";
-var id;
 // aqui fecha a modal assim que realiza o cadastro do tutor(ao clicar salvar ou cancelar)
 function closeUserModal() {
     const modalElement = document.getElementById('userModal');
@@ -36,6 +35,7 @@ function writerUserRow(user) {
         <td class="w-25">
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#userModal" onclick="fillFormForUpdate('${userUpdate}')">Editar</button>
             <button class="btn btn-danger" onclick ="deleteUser('${user.cpf}')">Apagar</button>
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#lista" onclick="petForm('${user.cpf}')">teste</button>
         </td>
     </tr>
     `;
@@ -137,5 +137,14 @@ async function loadUsers() {
 
 }
 
-
 loadUsers();
+
+async function petForm(userID) {
+    await axios.get('http://localhost:8080/adote-quatropatas/adocao?cpf='+userID);
+}
+
+function closeListaModal() {
+    const modalElement = document.getElementById('lista');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    modal.hide();
+}
