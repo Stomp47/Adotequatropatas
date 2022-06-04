@@ -1,6 +1,6 @@
 let selectedUserId = "";
 var id;
-
+// aqui fecha a modal assim que realiza o cadastro do tutor(ao clicar salvar ou cancelar)
 function closeUserModal() {
     const modalElement = document.getElementById('userModal');
     const modal = bootstrap.Modal.getInstance(modalElement);
@@ -17,12 +17,12 @@ function closeUserModal() {
     document.getElementById('submitBtn').innerHTML = "Salvar";
     selectedUserId = null;
 }
-
+//verifica se o id esta presente, se sim o tutor é atualizado, se não um novo tutor é gerado
 function submitForm() {
     if (!selectedUserId) saveUser();
     else updateUser();
 }
-
+//escreve os parametros do tutor conforme identificado dentro da td adotaPet
 function writerUserRow(user) {
     const userUpdate = encodeURIComponent(JSON.stringify(user));
     return `
@@ -34,13 +34,13 @@ function writerUserRow(user) {
         <td>${user.email}</td>
         <td>${user.telefone}</td>
         <td class="w-25">
-            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#userModal" onclick="fillFormForUpdate('${userUpdate}')">Update</button>
-            <button class="btn btn-danger" onclick ="deleteUser('${user.cpf}')">Delete</button>
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#userModal" onclick="fillFormForUpdate('${userUpdate}')">Editar</button>
+            <button class="btn btn-danger" onclick ="deleteUser('${user.cpf}')">Apagar</button>
         </td>
     </tr>
     `;
 }
-
+//aqui atualiza() o formulario do cadastro ja feito do tutor(clicando em editar)
 function fillFormForUpdate(userPayload) {
 
     document.getElementById('submitBtn').innerHTML = "Atualizar";
@@ -54,7 +54,7 @@ function fillFormForUpdate(userPayload) {
     selectedUserId = user.cpf;
 }
 
-
+// assim que clica em "adicionar tutor" a modal abre e assim podera salvar os dados do tutor
 function saveUser() {
     const cpf = document.getElementById("cpf").value;
     const nome = document.getElementById("nome").value;
@@ -77,9 +77,8 @@ function saveUser() {
     setTimeout("location.reload(true);", 17);
 
 }
-
+//aqui atualiza os dados do tutor cadastrado 
 function updateUser() {
-    // const cpf = document.getElementById("cpf").value;
     const nome = document.getElementById("nome").value;
     const cidade = document.getElementById("cidade").value;
     const estado = document.getElementById("estado").value;
@@ -115,7 +114,7 @@ function updateUser() {
 
     closeUserModal();
 }
-
+// aqui é o botao deletar o tutor
 async function deleteUser(userID) {
 
 
@@ -137,4 +136,6 @@ async function loadUsers() {
 
 
 }
+
+
 loadUsers();

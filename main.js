@@ -1,6 +1,6 @@
 let selectedUserId = "";
 var id;
-
+// assim que clicar no botão salvar fechará a modal e atualiza
 function closeUserModal() {
     const modalElement = document.getElementById('userModal');
     const modal = bootstrap.Modal.getInstance(modalElement);
@@ -42,11 +42,12 @@ function writerUserRow(user) {
         <td class="w-25">
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#userModal" onclick="fillFormForUpdate('${userUpdate}')">Editar</button>
             <button class="btn btn-danger" onclick ="deleteUser('${user.id}')">Apagar</button>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#adotaPet" onclick="adotarPet('${user.id}')">Adotar</button>
         </td>
     </tr>
     `;
 }
-
+//aqui atualiza o animal cadastrado
 function fillFormForUpdate(userPayload) {
     document.getElementById('submitBtn').innerHTML = "Atualizar";
     const user = JSON.parse(decodeURIComponent(userPayload));
@@ -62,7 +63,7 @@ function fillFormForUpdate(userPayload) {
     selectedUserId = user.id;
 }
 
-
+//botão salvar animal
 function saveUser() {
     const nome = document.getElementById("nome").value;
     const idade = document.getElementById("idade").value;
@@ -87,7 +88,7 @@ function saveUser() {
     setTimeout("location.reload(true);", 17);
 
 }
-
+//botao atualizar animal
 function updateUser() {
     const nome = document.getElementById("nome").value;
     const idade = document.getElementById("idade").value;
@@ -135,10 +136,8 @@ function updateUser() {
 
     closeUserModal();
 }
-
+//botão deletar animal
 async function deleteUser(userID) {
-
-
     await axios.delete('http://localhost:8080/adote-quatropatas/pet?id_externo=' + userID);
 
     const userElement = document.getElementById('row-' + userID);
@@ -155,6 +154,40 @@ async function loadUsers() {
     const tableBody = document.getElementById("table-body");
     tableBody.innerHTML = tableBodyContent;
 
-
 }
 loadUsers();
+
+
+// Fecha modal do adota pet
+function closeAdocaoModal() {
+    const modalElement = document.getElementById('adotaPet');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    modal.hide();
+
+    document.getElementById("cpf").value = "";
+
+
+    document.getElementById('submitBtn').innerHTML = "Adotar";
+    selectedUserId = null;
+}
+
+
+
+// Função de adotar o pet
+function adotarPet(userID) {
+
+    console.log(userID)
+    const cpf = document.getElementById("cpf").value;
+
+    var id_pet = userID;
+    axios.post('http://localhost:8080/adote-quatropatas/adocao', { id_pet, cpf }).then((response) => {
+        console.log('Everything is awesome.');
+    }).catch((error) => {
+        console.warn('Not good man :(', error);
+    })
+
+    // closeAdocaoModal();
+    // setTimeout("location.reload(true);", 17);
+
+}
+

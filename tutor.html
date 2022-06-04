@@ -13,7 +13,7 @@
 <body>
     <div class="container-fluid">
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal"> Adicionar Tutor</button>
- 
+        <a class="btn btn-primary" target="_blank" href="index.html">Lista de animais</a>
 
         <table class="table table-striped" id="table">
             <thead>
@@ -34,7 +34,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                   <!-- <td>
+                    <!-- <td>
                         <button class="btn btn-success">Editar</button>
                         <button class="btn btn-danger">Apagar</button>
                         <a class="btn btn-primary" target="_blank" href="bichosadotados.html">Animais adotados</a>
@@ -54,7 +54,8 @@
                             <form action="form px-4">
                                 <div class="form-group mb-4">
                                     <label for="cpf">CPF</label>
-                                    <input type="number" class="form-control" maxlength="11" id="cpf" placeholder="Não é possível alterar mais tarde">
+                                    <input type="number" class="form-control" maxlength="11" id="cpf"
+                                        placeholder="Não é possível alterar mais tarde">
                                 </div>
                                 <div class="form-group mb-4">
                                     <label for="nome">Nome</label>
@@ -79,15 +80,19 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                           
-                            <button type="button" class="btn btn-success" onclick="submitForm()"id="submitBtn">Salvar</button>
+
+                            <button type="button" class="btn btn-success" onclick="submitForm()"
+                                id="submitBtn">Salvar</button>
                             <button type="button" class="btn btn-danger" onclick="closeUserModal()">Cancelar</button>
                         </div>
                     </div>
                 </div>
             </div>
+
+           
         </table>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

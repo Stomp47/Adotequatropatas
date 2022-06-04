@@ -50,8 +50,7 @@
                 </tr>
                 
             </tbody>
-            <!-- Modal -->
-
+            <!-- Modal cadastro pet -->
             <div class="modal fade" id="userModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -102,6 +101,33 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" onclick="submitForm()" id="submitBtn">Salvar</button>
                             <button type="button" class="btn btn-danger" onclick="closeUserModal()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+
+             
+
+            </div>
+            <!-- Modal adoção-->
+            <div class="modal fade" id="adotaPet" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Adotar Pet</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form action="form px-4">
+                                <div class="form-group mb-4">
+                                    <label for="cpf">CPF</label>
+                                    <input type="number" class="form-control" maxlength="11" id="cpf"
+                                        placeholder="Caso não esteja registrado, não será possível adotar">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" onclick="adotarPet()" id="submitBtn">Salvar</button>
+                            <button type="button" class="btn btn-danger" onclick="closeAdocaoModal()">Cancelar</button>
                         </div>
                     </div>
                 </div>
