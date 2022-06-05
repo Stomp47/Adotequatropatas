@@ -1,7 +1,7 @@
 let selectedUserId = "";
 // assim que clicar no botão salvar fechará a modal e atualiza
-function closeUserModal() {
-    const modalElement = document.getElementById('userModal');
+function fechaModalCadastro() {
+    const modalElement = document.getElementById('modalCadastro');
     const modal = bootstrap.Modal.getInstance(modalElement);
     modal.hide();
 
@@ -19,12 +19,12 @@ function closeUserModal() {
     selectedUserId = null;
 }
 
-function submitForm() {
-    if (!selectedUserId) saveUser();
-    else updateUser();
+function escolheFuncao() {
+    if (!selectedUserId) cadastraPet();
+    else EditaCadastroPet();
 }
 
-function writerUserRow(user) {
+function escreveLinhaCadastroPet(user) {
     const userUpdate = encodeURIComponent(JSON.stringify(user));
     return `
     <tr id="row-${user.id}">
@@ -39,14 +39,14 @@ function writerUserRow(user) {
         <td>${user.estado}</td>
         <td>${user.deficiencia}</td>
         <td class="w-25">
-            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#userModal" onclick="fillFormForUpdate('${userUpdate}')">Editar</button>
-            <button class="btn btn-dark" onclick ="deleteUser('${user.id}')">Apagar</button>
+            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalCadastro" onclick="fillFormForUpdate('${userUpdate}')">Editar</button>
+            <button class="btn btn-dark" onclick ="apagaCadastroPet('${user.id}')">Apagar</button>
         </td>
     </tr>
     `;
 }
 //aqui atualiza o animal cadastrado
-function fillFormForUpdate(userPayload) {
+function carregaInformacoesParaAtualizar(userPayload) {
     document.getElementById('submitBtn').innerHTML = "Atualizar";
     const user = JSON.parse(decodeURIComponent(userPayload));
     document.getElementById('nome').value = user.nome;
@@ -62,7 +62,7 @@ function fillFormForUpdate(userPayload) {
 }
 
 //botão salvar animal
-function saveUser() {
+function cadastraPet() {
     const nome = document.getElementById("nome").value;
     const idade = document.getElementById("idade").value;
     const especie = document.getElementById("especie").value;
@@ -77,17 +77,17 @@ function saveUser() {
 
     const user = { selectedUserId, nome, idade, especie, genero, porte, peso, cidade, estado, deficiencia };
 
-    const appendData = writerUserRow(user);
+    const appendData = escreveLinhaCadastroPet(user);
 
     const tableBody = document.getElementById('table-body');
     tableBody.innerHTML += appendData;
 
-    closeUserModal();
+    fechaModalCadastro();
     setTimeout("location.reload(true);", 17);
-
 }
+
 //botao atualizar animal
-function updateUser() {
+function EditaCadastroPet() {
     const nome = document.getElementById("nome").value;
     const idade = document.getElementById("idade").value;
     const especie = document.getElementById("especie").value;
@@ -118,7 +118,7 @@ function updateUser() {
 
     const userUpdate = encodeURIComponent(JSON.stringify({ id: selectedUserId, nome, idade, especie, genero, porte, peso, cidade, estado, deficiencia }));
 
-    updateButtonField.setAttribute("onclick", 'fillFormForUpdate("' + userUpdate + '")');
+    updateButtonField.setAttribute("onclick", 'carregaInformacoesParaAtualizar("' + userUpdate + '")');
 
     nomeField.innerHTML = nome;
     idadeField.innerHTML = idade;
@@ -130,29 +130,29 @@ function updateUser() {
     especieField.innerHTML = especie;
     deficienciaField.innerHTML = deficiencia;
 
-
-    closeUserModal();
+    fechaModalCadastro();
 }
+
 //botão deletar animal
-async function deleteUser(userID) {
+async function apagaCadastroPet(userID) {
     await axios.delete('http://localhost:8080/adote-quatropatas/pet?id=' + userID);
 
     const userElement = document.getElementById('row-' + userID);
     userElement.remove();
 }
 
-async function loadUsers() {
+async function carregaListaPets() {
     let tableBodyContent = "";
 
     const { data: users } = await axios.get('http://localhost:8080/adote-quatropatas/pet');
 
-    users.forEach(user => (tableBodyContent += writerUserRow(user)));
+    users.forEach(user => (tableBodyContent += escreveLinhaCadastroPet(user)));
 
     const tableBody = document.getElementById("table-body");
     tableBody.innerHTML = tableBodyContent;
 
 }
-loadUsers();
+carregaListaPets();
 
 
 // Fecha modal do adota pet
@@ -168,16 +168,11 @@ function closeAdocaoModal() {
     selectedUserId = null;
 }
 
-function petForm() {
-}
-
 // Função de adotar o pet
 function adotarPet() {
 
     const id = document.getElementById("id").value;
     const cpf = document.getElementById("cpf").value;
-    console.log(cpf);
-    console.log("se",id);
 
     axios.post('http://localhost:8080/adote-quatropatas/adocao', { id, cpf })
     closeAdocaoModal();

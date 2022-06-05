@@ -1,7 +1,8 @@
-let selectedUserId = "";
+let idTutorSelecionado = "";
+
 // aqui fecha a modal assim que realiza o cadastro do tutor(ao clicar salvar ou cancelar)
-function closeUserModal() {
-    const modalElement = document.getElementById('userModal');
+function fechaModalCadastro() {
+    const modalElement = document.getElementById('modalCadastro');
     const modal = bootstrap.Modal.getInstance(modalElement);
     modal.hide();
 
@@ -14,48 +15,50 @@ function closeUserModal() {
 
 
     document.getElementById('submitBtn').innerHTML = "Salvar";
-    selectedUserId = null;
+    idTutorSelecionado = null;
 }
+
 //verifica se o id esta presente, se sim o tutor é atualizado, se não um novo tutor é gerado
-function submitForm() {
-    if (!selectedUserId) saveUser();
-    else updateUser();
+function escolheFuncao() {
+    if (!idTutorSelecionado) cadastraTutor();
+    else editaCadastroTutor();
 }
 //escreve os parametros do tutor conforme identificado dentro da td adotaPet
-function writerUserRow(user) {
-    const userUpdate = encodeURIComponent(JSON.stringify(user));
+function escreveLinhaTutor(tutor) {
+    const tutorAtualizado = encodeURIComponent(JSON.stringify(tutor));
     return `
-    <tr id="row-${user.cpf}">
-        <td>${user.cpf}</td> 
-        <td>${user.nome}</td>
-        <td>${user.cidade}</td>
-        <td>${user.estado}</td>
-        <td>${user.email}</td>
-        <td>${user.telefone}</td>
+    <tr id="row-${tutor.cpf}">
+        <td>${tutor.cpf}</td> 
+        <td>${tutor.nome}</td>
+        <td>${tutor.cidade}</td>
+        <td>${tutor.estado}</td>
+        <td>${tutor.email}</td>
+        <td>${tutor.telefone}</td>
         <td class="w-25">
-            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#userModal" onclick="fillFormForUpdate('${userUpdate}')">Editar</button>
-            <button class="btn btn-dark" onclick ="deleteUser('${user.cpf}')">Apagar</button>
-            <button class="btn btn-dark" onclick ="petForm('${user.cpf}')">Animais Adotados</button>
+            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalCadastro" onclick="carregaInformacoesParaAtualizar('${tutorAtualizado}')">Editar</button>
+            <button class="btn btn-dark" onclick ="apagaCadastroTutor('${tutor.cpf}')">Apagar</button>
+            <button class="btn btn-dark" onclick ="listaPetsAdotados('${tutor.cpf}')">Animais Adotados</button>
         </td>
     </tr>
     `;
 }
+
 //aqui atualiza() o formulario do cadastro ja feito do tutor(clicando em editar)
-function fillFormForUpdate(userPayload) {
+function carregaInformacoesParaAtualizar(tutorPayload) {
 
     document.getElementById('submitBtn').innerHTML = "Atualizar";
-    const user = JSON.parse(decodeURIComponent(userPayload));
-    document.getElementById('cpf').value = user.cpf;
-    document.getElementById('nome').value = user.nome;
-    document.getElementById('cidade').value = user.cidade;
-    document.getElementById('estado').value = user.estado;
-    document.getElementById('email').value = user.email;
-    document.getElementById('telefone').value = user.telefone;
-    selectedUserId = user.cpf;
+    const tutor = JSON.parse(decodeURIComponent(tutorPayload));
+    document.getElementById('cpf').value = tutor.cpf;
+    document.getElementById('nome').value = tutor.nome;
+    document.getElementById('cidade').value = tutor.cidade;
+    document.getElementById('estado').value = tutor.estado;
+    document.getElementById('email').value = tutor.email;
+    document.getElementById('telefone').value = tutor.telefone;
+    idTutorSelecionado = tutor.cpf;
 }
 
 // assim que clica em "adicionar tutor" a modal abre e assim podera salvar os dados do tutor
-function saveUser() {
+function cadastraTutor() {
     const cpf = document.getElementById("cpf").value;
     const nome = document.getElementById("nome").value;
     const cidade = document.getElementById("cidade").value;
@@ -66,44 +69,43 @@ function saveUser() {
 
     const { data } = axios.post('http://localhost:8080/adote-quatropatas/tutor', { cpf, nome, cidade, estado, email, telefone });
 
-    const user = { selectedUserId, cpf, nome, cidade, estado, email, telefone };
+    const user = { idTutorSelecionado, cpf, nome, cidade, estado, email, telefone };
 
-    const appendData = writerUserRow(user);
+    const appendData = escreveLinhaTutor(user);
 
     const tableBody = document.getElementById('table-body');
     tableBody.innerHTML += appendData;
 
-    closeUserModal();
+    fechaModalCadastro();
     setTimeout("location.reload(true);", 17);
-
 }
+
 //aqui atualiza os dados do tutor cadastrado 
-function updateUser() {
+function editaCadastroTutor() {
     const nome = document.getElementById("nome").value;
     const cidade = document.getElementById("cidade").value;
     const estado = document.getElementById("estado").value;
     const email = document.getElementById("email").value;
     const telefone = document.getElementById("telefone").value;
 
-
     axios({
         method: 'put',
-        url: 'http://localhost:8080/adote-quatropatas/tutor?cpf=' + selectedUserId,
+        url: 'http://localhost:8080/adote-quatropatas/tutor?cpf=' + idTutorSelecionado,
         data: { nome, cidade, estado, email, telefone }
     })
 
-    const nomeField = document.querySelector("#row-" + selectedUserId + " td:nth-child(2)");
-    const cidadeField = document.querySelector("#row-" + selectedUserId + " td:nth-child(3)");
-    const estadoField = document.querySelector("#row-" + selectedUserId + " td:nth-child(4)");
-    const emailField = document.querySelector("#row-" + selectedUserId + " td:nth-child(5)");
-    const telefoneField = document.querySelector("#row-" + selectedUserId + " td:nth-child(6)");
+    const nomeField = document.querySelector("#row-" + idTutorSelecionado + " td:nth-child(2)");
+    const cidadeField = document.querySelector("#row-" + idTutorSelecionado + " td:nth-child(3)");
+    const estadoField = document.querySelector("#row-" + idTutorSelecionado + " td:nth-child(4)");
+    const emailField = document.querySelector("#row-" + idTutorSelecionado + " td:nth-child(5)");
+    const telefoneField = document.querySelector("#row-" + idTutorSelecionado + " td:nth-child(6)");
 
 
-    const updateButtonField = document.querySelector("#row-" + selectedUserId + " td:nth-child(7) button:nth-child(1)");
+    const updateButtonField = document.querySelector("#row-" + idTutorSelecionado + " td:nth-child(7) button:nth-child(1)");
 
-    const userUpdate = encodeURIComponent(JSON.stringify({ cpf: selectedUserId, cpf, nome, cidade, estado, email, telefone }));
+    const userUpdate = encodeURIComponent(JSON.stringify({ cpf: idTutorSelecionado, cpf, nome, cidade, estado, email, telefone }));
 
-    updateButtonField.setAttribute("onclick", 'fillFormForUpdate("' + userUpdate + '")');
+    updateButtonField.setAttribute("onclick", 'carregaInformacoesParaAtualizar("' + userUpdate + '")');
 
     nomeField.innerHTML = nome;
     cidadeField.innerHTML = cidade;
@@ -111,12 +113,12 @@ function updateUser() {
     emailField.innerHTML = email;
     telefoneField.innerHTML = telefone;
 
-
-    closeUserModal();
+    fechaModalCadastro();
 }
-// aqui é o botao deletar o tutor
-async function deleteUser(userID) {
 
+
+// aqui é o botao deletar o tutor
+async function apagaCadastroTutor(userID) {
 
     await axios.delete('http://localhost:8080/adote-quatropatas/tutor?cpf=' + userID);
 
@@ -124,28 +126,27 @@ async function deleteUser(userID) {
     userElement.remove();
 }
 
-async function loadUsers() {
+async function carregaListaTutores() {
     let tableBodyContent = "";
 
     const { data: users } = await axios.get('http://localhost:8080/adote-quatropatas/tutor');
 
-    users.forEach(user => (tableBodyContent += writerUserRow(user)));
+    users.forEach(user => (tableBodyContent += escreveLinhaTutor(user)));
 
     const tableBody = document.getElementById("table-body");
     tableBody.innerHTML = tableBodyContent;
 
-
 }
 
-loadUsers();
+carregaListaTutores();
 
-async function petForm(userID) {
+async function listaPetsAdotados(userID) {
 
     let tableBodyContent = "";
 
-    const { data: users } = await axios.get('http://localhost:8080/adote-quatropatas/adocao?cpf='+userID);
+    const { data: users } = await axios.get('http://localhost:8080/adote-quatropatas/adocao?cpf=' + userID);
 
-    users.forEach(user => (tableBodyContent += writerPetRow(user)));
+    users.forEach(user => (tableBodyContent += escreveLinhaCadastroPet(user)));
 
     const tableBody = document.getElementById("listaPets");
     tableBody.innerHTML = tableBodyContent;
@@ -153,7 +154,7 @@ async function petForm(userID) {
 
 }
 
-function writerPetRow(user) {
+function escreveLinhaCadastroPet(user) {
     return `
     <tr id="row-${user.id}">
         <td>${user.id}</td>
