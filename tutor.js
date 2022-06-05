@@ -35,7 +35,7 @@ function writerUserRow(user) {
         <td class="w-25">
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#userModal" onclick="fillFormForUpdate('${userUpdate}')">Editar</button>
             <button class="btn btn-danger" onclick ="deleteUser('${user.cpf}')">Apagar</button>
-            <button class="btn btn-danger" onclick ="petForm('${user.cpf}')">teste</button>
+            <button class="btn btn-success" onclick ="petForm('${user.cpf}')">Animais Adotados</button>
         </td>
     </tr>
     `;
