@@ -11,9 +11,18 @@
 </head>
 
 <body>
-    <div class="container-fluid" style="margin-top:2%;">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#userModal"> Adicionar Tutor</button>
-        <a class="btn btn-info" href="index.html">Lista de animais</a>
+    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+       <div class="carousel-item active">
+         <img src="imagem_do_gunther.jpg" class="d-block w-100" alt="...">
+       </div>
+       </div>
+   </div>  
+    <div class="container-fluid">
+        <nav class="navbar navbar-light" style="background-color: #ffffff;">
+        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#userModal"> Adicionar Tutor</button>
+        <a class="btn btn-dark" href="index.html">Lista de animais</a>
+    </nav>  
         <table class="table table-striped" id="table" style="margin-top:10px; width: 100%;">
             <thead class="table-dark">
                 <tr>
@@ -66,8 +75,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-success" onclick="submitForm()" id="submitBtn">Salvar</button>
-                            <button type="button" class="btn btn-danger" onclick="closeUserModal()">Cancelar</button>
+                            <button type="button" class="btn btn-dark" onclick="submitForm()" id="submitBtn">Salvar</button>
+                            <button type="button" class="btn btn-dark" onclick="closeUserModal()">Cancelar</button>
                         </div>
                     </div>
                 </div>

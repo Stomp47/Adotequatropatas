@@ -33,9 +33,9 @@ function writerUserRow(user) {
         <td>${user.email}</td>
         <td>${user.telefone}</td>
         <td class="w-25">
-            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#userModal" onclick="fillFormForUpdate('${userUpdate}')">Editar</button>
-            <button class="btn btn-danger" onclick ="deleteUser('${user.cpf}')">Apagar</button>
-            <button class="btn btn-success" onclick ="petForm('${user.cpf}')">Animais Adotados</button>
+            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#userModal" onclick="fillFormForUpdate('${userUpdate}')">Editar</button>
+            <button class="btn btn-dark" onclick ="deleteUser('${user.cpf}')">Apagar</button>
+            <button class="btn btn-dark" onclick ="petForm('${user.cpf}')">Animais Adotados</button>
         </td>
     </tr>
     `;
