@@ -39,7 +39,7 @@ function escreveLinhaCadastroPet(user) {
         <td>${user.estado}</td>
         <td>${user.deficiencia}</td>
         <td class="w-25">
-            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalCadastro" onclick="fillFormForUpdate('${userUpdate}')">Editar</button>
+            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalCadastro" onclick="carregaInformacoesParaAtualizar('${userUpdate}')">Editar</button>
             <button class="btn btn-dark" onclick ="apagaCadastroPet('${user.id}')">Apagar</button>
         </td>
     </tr>
